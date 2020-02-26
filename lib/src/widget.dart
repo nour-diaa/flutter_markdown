@@ -71,6 +71,7 @@ abstract class MarkdownWidget extends StatefulWidget {
     this.imageBuilder,
     this.checkboxBuilder,
     this.fitContent = false,
+    this.onTap,
   })  : assert(data != null),
         assert(selectable != null),
         super(key: key);
@@ -117,6 +118,9 @@ abstract class MarkdownWidget extends StatefulWidget {
 
   /// Whether to allow the widget to fit the child content.
   final bool fitContent;
+
+  /// Default tap handler used when [selectable] is set to true
+  final VoidCallback onTap;
 
   /// Subclasses should override this function to display the given children,
   /// which are the parsed representation of [data].
@@ -171,6 +175,7 @@ class _MarkdownWidgetState extends State<MarkdownWidget> implements MarkdownBuil
       imageBuilder: widget.imageBuilder,
       checkboxBuilder: widget.checkboxBuilder,
       fitContent: widget.fitContent,
+      onTap: widget.onTap,
     );
     _children = builder.build(document.parseLines(lines));
   }
@@ -230,6 +235,7 @@ class MarkdownBody extends MarkdownWidget {
     MarkdownCheckboxBuilder checkboxBuilder,
     this.shrinkWrap = true,
     this.fitContent = true,
+    VoidCallback onTap,
   }) : super(
           key: key,
           data: data,
@@ -242,6 +248,7 @@ class MarkdownBody extends MarkdownWidget {
           extensionSet: extensionSet,
           imageBuilder: imageBuilder,
           checkboxBuilder: checkboxBuilder,
+          onTap: onTap,
         );
 
   /// See [ScrollView.shrinkWrap]

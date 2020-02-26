@@ -100,6 +100,7 @@ class MarkdownBuilder implements md.NodeVisitor {
     @required this.imageBuilder,
     @required this.checkboxBuilder,
     this.fitContent = false,
+    this.onTap,
   });
 
   /// A delegate that controls how link and `pre` elements behave.
@@ -124,6 +125,9 @@ class MarkdownBuilder implements md.NodeVisitor {
 
   /// Whether to allow the widget to fit the child content.
   final bool fitContent;
+
+  /// Default tap handler used when [selectable] is set to true
+  final VoidCallback onTap;
 
   final List<String> _listIndents = <String>[];
   final List<_BlockElement> _blocks = <_BlockElement>[];
@@ -544,6 +548,7 @@ class MarkdownBuilder implements md.NodeVisitor {
       return SelectableText.rich(
         text,
         //textScaleFactor: styleSheet.textScaleFactor,
+        onTap: onTap,
       );
     } else {
       return RichText(
